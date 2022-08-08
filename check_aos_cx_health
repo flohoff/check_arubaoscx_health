@@ -31,7 +31,9 @@ package SNMP;
 				2 => "outSync",
 				3 => "inSync"
 			}
-		}
+		},
+		"arubaWiredPSUName" => { oid => ".1.3.6.1.4.1.47196.4.1.1.3.11.2.1.1.3" },
+		"arubaWiredPSUState" => { oid => ".1.3.6.1.4.1.47196.4.1.1.3.11.2.1.1.4" }
 	};
 
 	sub new {
@@ -301,7 +303,8 @@ package AOS;
 			return sprintf("%d ok", scalar @fans);
 		}
 
-		return sprintf("%s not ok", join(",", map { $_->{arubaWiredFanName}{value} } @nonok));
+		my @status=map { $_->{arubaWiredFanName}{value} . " " . $_->{arubaWiredFanState}{value} } @nonok;
+		return sprintf("%s %s", join(",", @status));
 	}
 
 	sub fans_ok {
@@ -323,6 +326,39 @@ package AOS;
  		$self->{fans}=$self->merge_tables_by_instance($state, $name);
 	}
 
+	sub psu_status {
+		my ($self) = @_;
+
+		my @psu=values %{$self->{psu}};
+		my @nonok=grep { $_->{arubaWiredPSUState}{value} ne 'ok' } @psu;
+
+		if (scalar @nonok == 0) {
+			return sprintf("%d ok", scalar @psu);
+		}
+
+		my @status=map { $_->{arubaWiredPSUName}{value} . " " . $_->{arubaWiredPSUState}{value} } @nonok;
+		return sprintf("%s %s", join(",", @status));
+	}
+
+	sub psu_ok {
+		my ($self) = @_;
+
+		my @nonok=grep { $_->{arubaWiredPSUState}{value} ne 'ok' } values %{$self->{psu}};
+
+		return scalar @nonok == 0;
+	}
+
+	sub psu_read {
+		my ($self) = @_;
+
+		my $state=$self->{snmp}->walk("arubaWiredPSUState");
+		my $name=$self->{snmp}->walk("arubaWiredPSUName");
+
+		#$state->{"arubaWiredPSUState.1.1"}{value}{value}="not ok";
+
+ 		$self->{psu}=$self->merge_tables_by_instance($state, $name);
+	}
+
 	sub sysDescr {
 		my ($self) = @_;
 		return $self->{sysDescr}{"sysDescr.0"}{value}{value};
@@ -339,6 +375,7 @@ package AOS;
 
 		$self->vsx_read();
 		$self->fans_read();
+		$self->psu_read();
 
 		return (1, undef);
 	}
@@ -383,6 +420,9 @@ package main;
 
  	$np->add_message($aos->fans_ok() ? OK : CRITICAL,
  		sprintf("FAN status: %s", $aos->fans_status()));
+
+ 	$np->add_message($aos->psu_ok() ? OK : CRITICAL,
+ 		sprintf("PSU status: %s", $aos->psu_status()));
 
 	if ($aos->vsx_enabled()) {
 		$np->add_message($aos->vsx_ok() ? OK : CRITICAL,
