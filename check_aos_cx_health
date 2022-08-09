@@ -278,7 +278,8 @@ package AOS;
 	sub vsx_enabled {
 		my ($self) = @_;
 
-		if ($self->{vsxDeviceRole}{"arubaWiredVsxDeviceRole.0"}{value}{string} eq 'notConfigured') {
+		if (defined($self->{vsxDeviceRole}{_error})
+			|| $self->{vsxDeviceRole}{"arubaWiredVsxDeviceRole.0"}{value}{string} eq 'notConfigured') {
 			return 0;
 		}
 
@@ -298,6 +299,10 @@ package AOS;
 
 		my @fans=values %{$self->{fans}};
 		my @nonok=grep { $_->{arubaWiredFanState}{value} ne 'ok' } @fans;
+
+		if (scalar @fans == 0) {
+			return "No FANs found";
+		}
 
 		if (scalar @nonok == 0) {
 			return sprintf("%d ok", scalar @fans);
@@ -331,6 +336,10 @@ package AOS;
 
 		my @psu=values %{$self->{psu}};
 		my @nonok=grep { $_->{arubaWiredPSUState}{value} ne 'ok' } @psu;
+
+		if (scalar @psu == 0) {
+			return "No PSUs found";
+		}
 
 		if (scalar @nonok == 0) {
 			return sprintf("%d ok", scalar @psu);
