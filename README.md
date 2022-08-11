@@ -37,3 +37,25 @@ You will need some perl modules. On Debian/Ubuntu based systems:
 	apt-get install libnet-snmp-perl liblist-moreutils-perl \
 		libmonitoring-plugin-perl libgetopt-long-descriptive-perl 
 		
+
+TODO
+----
+
+ Temperature Sensors:
+
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorName.1.3.1.1 = STRING: 1/1-1
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorName.1.3.1.2 = STRING: 1/1-2
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorName.1.3.1.3 = STRING: 1/1-3
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorState.1.3.1.1 = STRING: normal
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorState.1.3.1.2 = STRING: normal
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorState.1.3.1.3 = STRING: normal
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorTemperature.1.3.1.1 = INTEGER: 28500 millidegrees Celsius
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorTemperature.1.3.1.2 = INTEGER: 26500 millidegrees Celsius
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorTemperature.1.3.1.3 = INTEGER: 25500 millidegrees Celsius
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorMinTemp.1.3.1.1 = INTEGER: 26000 millidegrees Celsius
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorMinTemp.1.3.1.2 = INTEGER: 24000 millidegrees Celsius
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorMinTemp.1.3.1.3 = INTEGER: 22500 millidegrees Celsius
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorMaxTemp.1.3.1.1 = INTEGER: 32500 millidegrees Celsius
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorMaxTemp.1.3.1.2 = INTEGER: 30000 millidegrees Celsius
+	ARUBAWIRED-TEMPSENSOR-MIB::arubaWiredTempSensorMaxTemp.1.3.1.3 = INTEGER: 28500 millidegrees Celsius
+
