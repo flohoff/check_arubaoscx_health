@@ -278,8 +278,14 @@ package AOS;
 	sub vsx_enabled {
 		my ($self) = @_;
 
-		if (defined($self->{vsxDeviceRole}{_error})
-			|| $self->{vsxDeviceRole}{"arubaWiredVsxDeviceRole.0"}{value}{string} eq 'notConfigured') {
+		if ($self->{vsxDeviceRole}{_error} ne '') {
+			return 0;
+		}
+
+		if ($self->{vsxDeviceRole}{"arubaWiredVsxDeviceRole.0"}{value}{value} =~ /noSuchObject/) {
+			return 0;
+		}
+		if ($self->{vsxDeviceRole}{"arubaWiredVsxDeviceRole.0"}{value}{string} =~ /notConfigured/) {
 			return 0;
 		}
 
