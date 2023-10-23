@@ -282,7 +282,7 @@ package AOS;
 			return 0;
 		}
 
-		if ($self->{vsxDeviceRole}{"arubaWiredVsxDeviceRole.0"}{value}{value} =~ /noSuchObject/) {
+		if ($self->{vsxDeviceRole}{"arubaWiredVsxDeviceRole.0"}{value}{value} =~ /noSuchObject|noSuchInstance/) {
 			return 0;
 		}
 		if ($self->{vsxDeviceRole}{"arubaWiredVsxDeviceRole.0"}{value}{string} =~ /notConfigured/) {
