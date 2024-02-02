@@ -348,7 +348,7 @@ package AOS;
 		}
 
 		my @status=map { $_->{arubaWiredPSUName}{value} . " " . $_->{arubaWiredPSUState}{value} } @nonok;
-		return sprintf("%s %s", join(",", @status));
+		return sprintf("%s", join(",", @status));
 	}
 
 	sub psu_ok {
