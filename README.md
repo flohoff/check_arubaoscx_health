@@ -10,6 +10,8 @@ Monitored Health Parameters:
   * Fan status e.g. arubaWiredFanState, arubaWiredFanName
   * VSX status e.g. arubaWiredVsxDeviceRole, arubaWiredVsxConfigSync, arubaWiredVsxIslOperState
   * PSU status e.g. arubaWiredPSUName, arubaWiredPSUState
+  * Image Version e.g. arubaWiredDefaultBoot, arubaWiredSwitchImageVersion, entPhysicalSoftwareRev
+    Will check if running version is the same as the one which will start on next boot
 
 Example output:
 
